@@ -1,3 +1,4 @@
+import 'package:chosen_destine/story_brain.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,8 @@ class ChosenDestine extends StatelessWidget {
     );
   }
 }
-
+//A new storyBrain object from the StoryBrain class.
+StoryBrain storyBrain=StoryBrain();
 class StoryPage extends StatefulWidget {
   @override
   State<StoryPage> createState() => _StoryPageState();
@@ -41,8 +43,9 @@ class _StoryPageState extends State<StoryPage> {
                 flex: 12,
                 child: Center(
                   child: Text(
-                    'Story text',
-                    style: TextStyle(fontSize: 25.0),
+                    //Using the storyBrain object to get the first story title and display it in this Text Widget.
+                    storyBrain.getStory(),
+                    style: TextStyle(fontSize: 25.0,color: Colors.white),
                   ),
                 ),
               ),
@@ -51,27 +54,45 @@ class _StoryPageState extends State<StoryPage> {
               ),
               Expanded(
                 flex: 2,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'Choice 1',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                child: Visibility(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        storyBrain.nextStory(1);
+                      });
+                    },
+                    child: Text(
+                      //Using the storyBrain object to get the first choice1 and display it in this Text Widget.
+                      storyBrain.getChoice1(),
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
+              SizedBox(
+                height:20.0,
+              ),
               Expanded(
                 flex: 2,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'Choice 2',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                child: Visibility(
+                  visible: storyBrain.buttonMustBeVisible(),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.teal,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        storyBrain.nextStory(2);
+                      });
+                    },
+                    child: Text(
+                      //Using the storyBrain object to get the first choice2 and display it in this Text Widget.
+                      storyBrain.getChoice2(),
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
